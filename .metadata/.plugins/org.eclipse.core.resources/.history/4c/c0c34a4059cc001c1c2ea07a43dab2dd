@@ -1,0 +1,42 @@
+package com.chainsys.jdbc;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+public class Preparedstatement {
+	 public static void main(String[] args) throws Exception
+	    {
+	        Class.forName("oracle.jdbc.driver.OracleDriver");
+	        Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","oracle"); 
+	    
+	        PreparedStatement stmt=con.prepareStatement("insert into College values(?,?,?,?)");
+	        //insert details in console
+
+	        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));     
+	        System.out.println("Enter Id:");  
+	        int id=Integer.parseInt(br.readLine());  
+	        System.out.println("Enter Name:");  
+	        String name=br.readLine();  
+	        //System.out.println("Enter age:");  
+	        //int age=Integer.parseInt(br.readLine());
+	        System.out.println("Enter Dept:");  
+	        String dept=br.readLine();
+	        System.out.println("Enter Marks:");  
+	        int marks=Integer.parseInt(br.readLine());
+	        //values sets in table
+	        stmt.setInt(1, id);
+	        stmt.setString(2, name);
+	        //stmt.setInt(3,age);
+	        stmt.setString(3,dept);
+	        stmt.setInt(4,marks);
+	        
+	        //checking whether the table is inserted or not
+	        int i=stmt.executeUpdate();
+	        System.out.println(i+ " Row Inserted");  
+	        con.close();  
+	    }
+
+}
